@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.IO;
+using System.Net;
 
 namespace Export_Ecommerce
 {
@@ -270,19 +271,73 @@ namespace Export_Ecommerce
 
                         scriviFile.WriteLine("{0,-41};{1,13};{2,13};{3,10};{4,10};{5,8};{6,4};{7,15};{8,-41};{9,3};{10,6};{11,70};{12,50};{13,30};", descrizione, ean, minsan, prezzo.ToString("0.00"), prezzo_calcolato.ToString("0.00"), costo.ToString("0.00"),giacenza, codiceDegrassi, descrizioneDegrassi, iva, revoca, gmp, ditta, disponibilita);
                     }
-                    
-
-
-
-                }
-                MessageBox.Show("prezzi ricalcolati: "+contatore_ricarico+" Prezzi Bancad dati: "+contatore_bancadati);
+                                    }
+                MessageBox.Show("Prezzi con Ricarico: "+contatore_ricarico+"\n"+ "Prezzi Banca Dati: "+contatore_bancadati);
                 scriviFile.Close();
             }
 
 
         }
 
-       
+        private void btnFtp_Click(object sender, EventArgs e)
+        {
+
+            string filename = "c:/file_dpsonline/estratto.csv";
+            string ftpServerIP = "ftp.dpsonline.it";
+            string ftpUserName = "farmaciapiaggio_gestionale";
+            string ftpPassword = "P14gg10";
+
+            FileInfo objFile = new FileInfo(filename);
+            FtpWebRequest objFTPRequest;
+
+            // Create FtpWebRequest object 
+            objFTPRequest = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + "/" + objFile.Name));
+
+            // Set Credintials
+            objFTPRequest.Credentials = new NetworkCredential(ftpUserName, ftpPassword);
+
+            // By default KeepAlive is true, where the control connection is 
+            // not closed after a command is executed.
+            objFTPRequest.KeepAlive = false;
+
+            // Set the data transfer type.
+            objFTPRequest.UseBinary = true;
+
+            // Set content length
+            objFTPRequest.ContentLength = objFile.Length;
+
+            // Set request method
+            objFTPRequest.Method = WebRequestMethods.Ftp.UploadFile;
+
+            // Set buffer size
+            int intBufferLength = 16 * 1024;
+            byte[] objBuffer = new byte[intBufferLength];
+
+            // Opens a file to read
+            FileStream objFileStream = objFile.OpenRead();
+
+            try
+            {
+                // Get Stream of the file
+                Stream objStream = objFTPRequest.GetRequestStream();
+
+                int len = 0;
+
+                while ((len = objFileStream.Read(objBuffer, 0, intBufferLength)) != 0)
+                {
+                    // Write file Content 
+                    objStream.Write(objBuffer, 0, len);
+
+                }
+
+                objStream.Close();
+                objFileStream.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
 

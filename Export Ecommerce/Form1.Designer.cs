@@ -35,7 +35,7 @@
             this.btnFarmaclick = new System.Windows.Forms.Button();
             this.btnParametriFck = new System.Windows.Forms.Button();
             this.btnGeneraFile = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnFtp = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.query_mysql)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GridViewQuery)).BeginInit();
             this.SuspendLayout();
@@ -109,22 +109,22 @@
             this.btnGeneraFile.UseVisualStyleBackColor = true;
             this.btnGeneraFile.Click += new System.EventHandler(this.btnGeneraFile_Click);
             // 
-            // button1
+            // btnFtp
             // 
-            this.button1.Location = new System.Drawing.Point(21, 335);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(116, 69);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Invio File";
-            this.button1.UseVisualStyleBackColor = true;
-           
+            this.btnFtp.Location = new System.Drawing.Point(21, 335);
+            this.btnFtp.Name = "btnFtp";
+            this.btnFtp.Size = new System.Drawing.Size(116, 69);
+            this.btnFtp.TabIndex = 6;
+            this.btnFtp.Text = "Invio File";
+            this.btnFtp.UseVisualStyleBackColor = true;
+            this.btnFtp.Click += new System.EventHandler(this.btnFtp_Click);
             // 
             // FormAvvio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 729);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnFtp);
             this.Controls.Add(this.btnGeneraFile);
             this.Controls.Add(this.btnParametriFck);
             this.Controls.Add(this.btnFarmaclick);
@@ -150,7 +150,7 @@
         private System.Windows.Forms.Button btnFarmaclick;
         private System.Windows.Forms.Button btnParametriFck;
         private System.Windows.Forms.Button btnGeneraFile;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnFtp;
     }
 }
 
