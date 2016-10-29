@@ -62,7 +62,7 @@ namespace Export_Ecommerce
                                                               "ON bfmagazzino.CodiceProdotto = bf2.CodiceProdotto " +
                                                               "INNER JOIN(select CodiceProdotto, MAX(prezzoEuro) pzoEuro from bf2000.tabellalistini GROUP BY CodiceProdotto) listini " +
                                                               "ON bfmagazzino.CodiceProdotto = listini.CodiceProdotto " +
-                                                              "WHERE bancadati.anagraficabancadati.TABDEGRASSI <> '1151' order by bfmagazzino.descrizione limit 10", connesione_mysql);
+                                                              "WHERE bancadati.anagraficabancadati.TABDEGRASSI <> '1151' order by bfmagazzino.descrizione", connesione_mysql);
             //adapter per passaggio dati al dataset
             adatta_query = new MySqlDataAdapter(query_mysql_command);
           //prova la connesione
@@ -335,7 +335,7 @@ namespace Export_Ecommerce
             }
             catch (Exception ex)
             {
-                MessageBox.Show("problemi con Invio File")
+                MessageBox.Show("problemi con Invio File");
             }
         }
     }

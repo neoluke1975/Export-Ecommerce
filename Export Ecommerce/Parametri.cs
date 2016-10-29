@@ -59,48 +59,54 @@ namespace Export_Ecommerce
         }
 
         private void btnTestFck_Click(object sender, EventArgs e)
-        {
-         //eseguo un test su farmaclick per avere i dati corretti
-            string descrizioneBreve;
-            string codiceSitoLogistico;
-            string codice;
-            string esitoServizio;
-            
-            fck2010login.LoginInputBean login = new fck2010login.LoginInputBean();
-            login.userName = tbxUtenteFck.Text;
-            login.password = tbxPwFck.Text;
-            login.nomeTerminale = "SERVER";
-
-            fck2010login.LoginOutputBean output = new fck2010login.LoginOutputBean();
-
-            fck2010login.farmaclick2010001Service webservice = new fck2010login.farmaclick2010001Service();
-            webservice.Url = (tbxFckLogin.Text);
-
-            output = webservice.FCKLogin(login);
-
-            lblIdSessione.Text = output.arrayFornitori[1].IDSessione;
-            descrizioneBreve = output.arrayFornitori[1].descrizioneBreve;
-            codiceSitoLogistico = output.arrayFornitori[1].codiceSitoLogistico;
-            for (int i = 0; i < output.arrayFornitori.Length; i++)
+        {try
             {
-                cbxFornitori.Items.Add(output.arrayFornitori[i].codice);
+                //eseguo un test su farmaclick per avere i dati corretti
+                string descrizioneBreve;
+                string codiceSitoLogistico;
+                string codice;
+                string esitoServizio;
+
+                fck2010login.LoginInputBean login = new fck2010login.LoginInputBean();
+                login.userName = tbxUtenteFck.Text;
+                login.password = tbxPwFck.Text;
+                login.nomeTerminale = "SERVER";
+
+                fck2010login.LoginOutputBean output = new fck2010login.LoginOutputBean();
+
+                fck2010login.farmaclick2010001Service webservice = new fck2010login.farmaclick2010001Service();
+                webservice.Url = (tbxFckLogin.Text);
+
+                output = webservice.FCKLogin(login);
+
+                lblIdSessione.Text = output.arrayFornitori[1].IDSessione;
+                descrizioneBreve = output.arrayFornitori[1].descrizioneBreve;
+                codiceSitoLogistico = output.arrayFornitori[1].codiceSitoLogistico;
+                for (int i = 0; i < output.arrayFornitori.Length; i++)
+                {
+                    cbxFornitori.Items.Add(output.arrayFornitori[i].codice);
+                }
+
+                esitoServizio = output.esitoServizio.ToString();
+                var servizi = output.arrayFornitori[1].arrayServizi;
+                for (int i = 0; i < servizi.Length - 1; i++)
+                {
+                    cbxServizi.Items.Add(servizi[i].url1);
+                    //url = servizi[19].url1;
+                }
+                if (esitoServizio == "0")
+                {
+                    MessageBox.Show("Login Fck eseguita correttamente");
+                }
+                else
+                {
+                    MessageBox.Show("comunicare all'assistenza il numero di errore =" + esitoServizio);
+                };
             }
-            
-            esitoServizio = output.esitoServizio.ToString();
-            var servizi = output.arrayFornitori[1].arrayServizi;
-            for (int i = 0; i < servizi.Length - 1; i++)
+            catch
             {
-                cbxServizi.Items.Add(servizi[i].url1);
-                //url = servizi[19].url1;
+                MessageBox.Show("problemi con i dati inseriti");
             }
-            if (esitoServizio=="0")
-            {
-                MessageBox.Show("Login Fck eseguita correttamente");
-            }
-            else
-            {
-                MessageBox.Show("comunicare all'assistenza il numero di errore =" + esitoServizio);
-            };
         }
     }
 }
