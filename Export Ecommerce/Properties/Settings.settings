@@ -1,7 +1,33 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Export_Ecommerce.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Export_Ecommerce_fck2010login_farmaclick2010001Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://farmaclick.infarma.it/Farmaclick2010001FCKLogin</Value>
+    </Setting>
+    <Setting Name="Export_Ecommerce_fck2010info_farmaclick2010001Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://farmaclick.infarma.it/Farmaclick2010001FCKInfoCom</Value>
+    </Setting>
+    <Setting Name="farmaclickUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">farmaclickUrl</Value>
+    </Setting>
+    <Setting Name="UtenteFck" Type="System.String" Scope="User">
+      <Value Profile="(Default)">UtenteFck</Value>
+    </Setting>
+    <Setting Name="PwFck" Type="System.String" Scope="User">
+      <Value Profile="(Default)">PwFck</Value>
+    </Setting>
+    <Setting Name="IdSessione" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Idsessione</Value>
+    </Setting>
+    <Setting Name="servizi" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="fornitore" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ricarico" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

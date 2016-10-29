@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://www.farmaclick.it/wsite/FARMACLICK/archive/WSDL/2010.001/2572/Farmaclick2010001FCKInfoCom.wsdl?160559" filename="Farmaclick2010001FCKInfoCom.wsdl" />
+  </Results>
+</DiscoveryClientResultsFile>

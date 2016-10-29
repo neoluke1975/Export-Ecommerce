@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:intf="http://farmaclick.infarma.it/Farmaclick2010001FCKLogin" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns1="urn:BeanService" xmlns:tns2="http://database.infarma.it" xmlns:impl="http://farmaclick.infarma.it/Farmaclick2010001FCKLogin" targetNamespace="http://farmaclick.infarma.it/Farmaclick2010001FCKLogin" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:BeanService">
+      <xsd:import namespace="http://database.infarma.it" />
+      <xsd:import namespace="http://farmaclick.infarma.it/Farmaclick2010001FCKLogin" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="LoginInputBean">
+        <xsd:sequence>
+          <xsd:element name="nomeTerminale" nillable="true" type="soapenc:string" />
+          <xsd:element name="password" nillable="true" type="soapenc:string" />
+          <xsd:element name="passwordSH" nillable="true" type="soapenc:string" />
+          <xsd:element name="userName" nillable="true" type="soapenc:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ErogazioneServiziBean">
+        <xsd:sequence>
+          <xsd:element name="giorno" type="xsd:int" />
+          <xsd:element name="oraFine" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="oraInizio" nillable="true" type="xsd:dateTime" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ServiziBean">
+        <xsd:sequence>
+          <xsd:element name="abilitato" type="xsd:int" />
+          <xsd:element name="arrayErogazioneServizi" nillable="true" type="impl:ArrayOf_tns1_ErogazioneServiziBean" />
+          <xsd:element name="codiceServizio" nillable="true" type="soapenc:string" />
+          <xsd:element name="livelloAPI" nillable="true" type="soapenc:string" />
+          <xsd:element name="url1" nillable="true" type="soapenc:string" />
+          <xsd:element name="url2" nillable="true" type="soapenc:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="FornitoreBean">
+        <xsd:sequence>
+          <xsd:element name="IDSessione" nillable="true" type="soapenc:string" />
+          <xsd:element name="arrayServizi" nillable="true" type="impl:ArrayOf_tns1_ServiziBean" />
+          <xsd:element name="codice" nillable="true" type="soapenc:string" />
+          <xsd:element name="codiceSitoLogistico" nillable="true" type="soapenc:string" />
+          <xsd:element name="descrizioneBreve" nillable="true" type="soapenc:string" />
+          <xsd:element name="fineFermoMacchina" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="inizioFermoMacchina" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="livelloAPI" nillable="true" type="soapenc:string" />
+          <xsd:element name="scadenzaSessione" nillable="true" type="xsd:dateTime" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="LoginOutputBean">
+        <xsd:sequence>
+          <xsd:element name="arrayFornitori" nillable="true" type="impl:ArrayOf_tns1_FornitoreBean" />
+          <xsd:element name="esitoServizio" type="xsd:int" />
+          <xsd:element name="newPassword" nillable="true" type="soapenc:string" />
+          <xsd:element name="serverTime" nillable="true" type="xsd:dateTime" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://farmaclick.infarma.it/Farmaclick2010001FCKLogin">
+      <xsd:import namespace="http://database.infarma.it" />
+      <xsd:import namespace="urn:BeanService" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="ArrayOf_tns1_ErogazioneServiziBean">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:ErogazioneServiziBean[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_ServiziBean">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:ServiziBean[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_FornitoreBean">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:FornitoreBean[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://database.infarma.it">
+      <xsd:import namespace="urn:BeanService" />
+      <xsd:import namespace="http://farmaclick.infarma.it/Farmaclick2010001FCKLogin" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="TooManyConnectionException">
+        <xsd:sequence />
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="FCKLoginResponse">
+    <wsdl:part name="FCKLoginReturn" type="tns1:LoginOutputBean" />
+  </wsdl:message>
+  <wsdl:message name="FCKLoginRequest">
+    <wsdl:part name="inBean" type="tns1:LoginInputBean" />
+  </wsdl:message>
+  <wsdl:message name="TooManyConnectionException">
+    <wsdl:part name="fault" type="tns2:TooManyConnectionException" />
+  </wsdl:message>
+  <wsdl:portType name="farmaclick2010001">
+    <wsdl:operation name="FCKLogin" parameterOrder="inBean">
+      <wsdl:input name="FCKLoginRequest" message="impl:FCKLoginRequest" />
+      <wsdl:output name="FCKLoginResponse" message="impl:FCKLoginResponse" />
+      <wsdl:fault name="TooManyConnectionException" message="impl:TooManyConnectionException" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Farmaclick2010001FCKLoginSoapBinding" type="impl:farmaclick2010001">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="FCKLogin">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="FCKLoginRequest">
+        <wsdlsoap:body use="encoded" namespace="http://api.farmaclick.infarma.it" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="FCKLoginResponse">
+        <wsdlsoap:body use="encoded" namespace="http://farmaclick.infarma.it/Farmaclick2010001FCKLogin" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="TooManyConnectionException">
+        <wsdlsoap:fault use="encoded" name="TooManyConnectionException" namespace="http://farmaclick.infarma.it/Farmaclick2010001FCKLogin" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="farmaclick2010001Service">
+    <wsdl:port name="Farmaclick2010001FCKLogin" binding="impl:Farmaclick2010001FCKLoginSoapBinding">
+      <wsdlsoap:address location="http://farmaclick.infarma.it/Farmaclick2010001FCKLogin" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
