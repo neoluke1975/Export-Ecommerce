@@ -60,7 +60,7 @@ namespace Export_Ecommerce
 
         private void btnTestFck_Click(object sender, EventArgs e)
         {
-         
+         //eseguo un test su farmaclick per avere i dati corretti
             string descrizioneBreve;
             string codiceSitoLogistico;
             string codice;

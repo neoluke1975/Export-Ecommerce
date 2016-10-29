@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.IO;
 using System.Net;
+using System.Threading;
 
 namespace Export_Ecommerce
 {
@@ -29,8 +30,9 @@ namespace Export_Ecommerce
         }
 
         private void btnRichiediDati_Click(object sender, EventArgs e)
-        {
+        {   //stringa di connesione amysql
             MySqlConnection connesione_mysql = new MySqlConnection("Server=localhost;Database=bancadati;Uid=root;Pwd=phs2012;");
+            //query per la richiesta dati
             MySqlCommand query_mysql_command = new MySqlCommand("select bfmagazzino.Descrizione," +
                                                               "anagraficabancadati.kean," +
                                                               "anagraficabancadati.tabiva," +
@@ -61,7 +63,9 @@ namespace Export_Ecommerce
                                                               "INNER JOIN(select CodiceProdotto, MAX(prezzoEuro) pzoEuro from bf2000.tabellalistini GROUP BY CodiceProdotto) listini " +
                                                               "ON bfmagazzino.CodiceProdotto = listini.CodiceProdotto " +
                                                               "WHERE bancadati.anagraficabancadati.TABDEGRASSI <> '1151' order by bfmagazzino.descrizione limit 10", connesione_mysql);
+            //adapter per passaggio dati al dataset
             adatta_query = new MySqlDataAdapter(query_mysql_command);
+          //prova la connesione
             try
             {
                 connesione_mysql.Open();
@@ -71,20 +75,22 @@ namespace Export_Ecommerce
 
                 MessageBox.Show("problemi di connesione");
             }
+            //provo a mettere nel dataset i dati della query
             try
             {
                 adatta_query.Fill(query_mysql, "tabella_query_mysql");
-
+               
                 GridViewQuery.DataSource = query_mysql;
                 GridViewQuery.DataMember = "tabella_query_mysql";
                 GridViewQuery.AutoResizeColumns();
+               
             }
             catch (Exception)
             {
 
                 MessageBox.Show("problema query");
             }
-
+            adatta_query.Dispose();
             connesione_mysql.Close();
 
 
@@ -99,18 +105,9 @@ namespace Export_Ecommerce
 
         private void btnFarmaclick_Click(object sender, EventArgs e)
         {
-            //DataColumn disponibilita = new DataColumn();
-            //disponibilita.DataType = System.Type.GetType("System.Int16");
-            //disponibilita.AllowDBNull = false;
-            //disponibilita.Caption = "disponibilita";
-            //disponibilita.ColumnName = "disponibilita";
-            //disponibilita.DefaultValue = 0;
-            //query_mysql.Tables[0].Columns.Add(disponibilita);
-
+            //ricarico i dati
             try
-            {
-
-
+            {                
                 GridViewQuery.DataSource = query_mysql;
                 GridViewQuery.DataMember = "tabella_query_mysql";
                 GridViewQuery.AutoResizeColumns();
@@ -120,6 +117,7 @@ namespace Export_Ecommerce
 
                 MessageBox.Show("problema query");
             }
+            //per ogni riga nel dataset consulto il grossista per i dati
             foreach (DataRow row in query_mysql.Tables[0].Rows)
             {
 
@@ -149,10 +147,12 @@ namespace Export_Ecommerce
                 //MessageBox.Show(output.esitoServizio.ToString());
 
             }
+            //alla fine metto a posto i dati e li salvo nel dataset
             GridViewQuery.BindingContext[query_mysql].EndCurrentEdit();
             query_mysql.AcceptChanges();
             adatta_query.Update(query_mysql, "tabella_query_mysql");
             GridViewQuery.DataSource = null;
+            //ricarico il dataset nella gridview
             try
             {
                 GridViewQuery.DataSource = query_mysql;
@@ -178,7 +178,7 @@ namespace Export_Ecommerce
          
             using (StreamWriter scriviFile = new StreamWriter("c:/file_dpsonline/estratto.csv"))
             {
-
+                //setto le intestazioni campi
                 string testa_descrizione = "PRODOTTO";
                 string testa_ean = "EAN";
                 string testa_minsan = "MINSAN";
@@ -197,6 +197,7 @@ namespace Export_Ecommerce
 
 
                 scriviFile.WriteLine("{0,-41};{1,-13};{2,-13};{3,-10};{4,-10};{5,-8};{6,-4};{7,-15};{8,-41};{9,-3};{10,-6};{11,-70};{12,-50};{13,30};", testa_descrizione, testa_ean, testa_minsan, testa_prezzo_Bancadati, testa_prezzo, testa_costo,testa_giac, testa_codice_degrassi, testa_degrassi, testa_iva, testa_revoca, testa_gmp, testa_ditta,testa_disp);
+                //ciclo il dataset per scrivere i dati nel file
                 foreach (DataRow r in query_mysql.Tables[0].Rows)
                 {
                     {
@@ -260,7 +261,6 @@ namespace Export_Ecommerce
                         }
                         if (disp>0)
                             if (disp<5)
-                           
                         {
                             disponibilita = "scarsa disponibilità";
                         }
@@ -281,7 +281,7 @@ namespace Export_Ecommerce
 
         private void btnFtp_Click(object sender, EventArgs e)
         {
-
+            //spedisc tramite ftp
             string filename = "c:/file_dpsonline/estratto.csv";
             string ftpServerIP = "ftp.dpsonline.it";
             string ftpUserName = "farmaciapiaggio_gestionale";
@@ -335,7 +335,7 @@ namespace Export_Ecommerce
             }
             catch (Exception ex)
             {
-                throw ex;
+                MessageBox.Show("problemi con Invio File")
             }
         }
     }
